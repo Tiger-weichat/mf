@@ -16,6 +16,4 @@ import java.util.Map;
 public interface MfPushLogDao extends BaseDao<MfPushLogEntity> {
 
     List<MfHouseInfoEntity> queryMyHouse(Map<String, Object> map);
-
-    void deleteByOpenId(String openId);
 }

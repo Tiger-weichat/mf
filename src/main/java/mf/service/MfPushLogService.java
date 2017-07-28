@@ -30,8 +30,4 @@ public interface MfPushLogService {
 	void deleteBatch(Integer[] ids);
 
 	List<MfHouseInfoEntity> queryMyHouse(Map<String, Object> map);
-
-	void deleteByOpenId(String openId);
-
-	public void savePushLog(String openId, Integer houseId, Integer pushType);
 }

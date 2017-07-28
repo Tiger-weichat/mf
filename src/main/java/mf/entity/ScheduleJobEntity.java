@@ -59,11 +59,6 @@ public class ScheduleJobEntity implements Serializable {
 	private Date createTime;
 
 	/**
-	 * 系统id
-	 */
-	private Long system;
-
-	/**
 	 * 设置：任务id
 	 * @param jobId 任务id
 	 */
@@ -157,13 +152,5 @@ public class ScheduleJobEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
-	}
-
-	public Long getSystem() {
-		return system;
-	}
-
-	public void setSystem(Long system) {
-		this.system = system;
 	}
 }

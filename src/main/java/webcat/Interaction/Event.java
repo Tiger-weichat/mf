@@ -2,7 +2,9 @@ package webcat.Interaction;
 
 import mf.entity.MfUserEntity;
 import mf.service.MfUserService;
-import mf.utils.*;
+import mf.utils.Constant;
+import mf.utils.ShiroUtils;
+import mf.utils.SpringContextUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,6 @@ public class Event {
 
         ReceiveXmlEntity entity = xmlreceive.getMsgEntity(xml);
 
-        MfUserService mfUserService = SpringContextUtils.getBean("mfUserService", MfUserService.class);
-
         if(entity != null){
             //event事件
             if("event".equals(entity.getMsgType())){
@@ -38,6 +38,8 @@ public class Event {
                 if(entity.getEvent().equals("subscribe")){
 
                     logger.info("subscribe");
+
+                    MfUserService mfUserService = SpringContextUtils.getBean("mfUserService", MfUserService.class);
 
                     //判断用户是否存在
                     MfUserEntity user = mfUserService.queryObject(entity.getFromUserName());
@@ -49,25 +51,21 @@ public class Event {
                         user = new MfUserEntity();
                         user.setOpenId(entity.getFromUserName());
                         user.setStatus(Constant.UserStatus.N.getValue());//新用户
-                        user.setSystem(Integer.valueOf(PropertyUtil.getProperty("system")));
-                        user.setLastTime(DateUtils.getTodayDate());
-
-                        user.setWnb(0);
 
                         mfUserService.save(user);
                     }
 
                     //关注成功，回复消息
                     StringBuffer mes = new StringBuffer();
-                    mes.append("主人！终于盼到您了，小蜗将秒速提供全网最新个人房源，点击下方【订阅设置】并完成设置后即可开始秒房之旅，还有神秘礼包哟！").append("");
-                    mes.append("[<a href='" + Menu.getMenuUrl(ConEnum.Menu.DYSZ.getValue()) + "'>订阅设置</a>]");
+                    mes.append("主人！终于盼到您了，小蜗将秒速提供全网最新个人房源，点击下方【订阅设置】并完成设置后即可开始秒房之旅，还有神秘礼包哟！").append("\n");
+                    mes.append("[<a href='" + Menu.getMenuUrl(ConEnum.Menu.DYSZ.getValue()) + "'>立即订阅</a>]");
 
                     message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, mes.toString());
                 }
                 //取消关注
                 else if(entity.getEvent().equals("unsubscribe")){
                     logger.info("unsubscribe");
-
+                    MfUserService mfUserService = SpringContextUtils.getBean("mfUserService", MfUserService.class);
                     mfUserService.unsubscribe(entity.getFromUserName());
                     //删除订阅设置
                 }
@@ -90,6 +88,7 @@ public class Event {
                         String openId = entity.getFromUserName();
 
                         //获取用户是否设置了勿扰模式
+                        MfUserService mfUserService = SpringContextUtils.getBean("mfUserService", MfUserService.class);
 
                         MfUserEntity user = mfUserService.queryObject(openId);
 
@@ -99,7 +98,7 @@ public class Event {
                             user.setWrStatus(1);
                             mfUserService.update(user);
                             //发送消息
-                            message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, "主人！您已开启【勿扰模式】啦~小蜗每天仅推送三次房源信息提醒，请主人及时批阅！");
+                            message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, "主人！您已开启【勿扰模式】啦，小蜗将在8:00 、12:00 、17:00 、21:00为您各推送一次房源信息，请主人及时批阅！");
                         }
                         else{
                             user.setWrStatus(0);
@@ -118,13 +117,14 @@ public class Event {
                 try{
                     type = MessageCache.cache.get(entity.getFromUserName(), new Callable<String>(){
                         public String call(){
-                            return "";
+                            return null;
                         }
                     });
                 }
                 catch (Exception e){
                     type = "";
                 }
+
 
                 if(StringUtils.isNotBlank(type) && "1".equals(type)){
                     if("1".equals(entity.getContent())){
@@ -133,23 +133,14 @@ public class Event {
                     else{
                         message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, "55555，小蜗会加倍努力工作的！");
                     }
-                    MessageCache.cache.invalidate(entity.getFromUserName());
                 }
                 else{
                     //发送一段文字，
-                    message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, "消息已记录，感谢您对闪电房的支持！");
+                    message = xmlFormat.formatXmlAnswer(entity.getFromUserName(), Constants.weixin, "消息已记录，感谢您对蜗牛秒房的支持！");
                 }
             }
-
-            MfUserEntity u = mfUserService.queryObject(entity.getFromUserName());
-            logger.info("#####################FromUserName"+entity.getFromUserName()+"#############################");
-            if(u != null){
-                u.setLastTime(DateUtils.getTodayDate());
-                u.setAttr1(null);
-                mfUserService.update(u);
-            }
         }
-
+        System.out.println(message);
         return message;
     }
 

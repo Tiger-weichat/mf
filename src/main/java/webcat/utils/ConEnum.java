@@ -11,21 +11,11 @@ public class ConEnum {
      */
     public enum Model{
 
-        CZTX_BY("adZHoflv54HqKLgafXsW3oFUoPXmYbsKiFGtr8eaYn8"),
+        CZTX_BY("CHIhRkfxvu-CUVrTE_vaHJIWDpnyIBJBM77T0n6X-OU"),
 
-        CZTX_WNB("XUwMz1U-ANaFzhZFlyP6ZkgJpI0RAwftbsE5IL2cdGA"),
+        CZTX_WNB("s8HVfRHlt-dM-XYJmDJDLFnj44jy6QmOA9oa7jVDEqU"),
 
-        YEBZ_WNB("cbo7FB1MeQHBCfg0E-1nTC4zsoP-5_fj4knECgh-Nck"),
-
-        GTCG_M("bo363NpvKawIdisPtZQlDWc0f58z9pz1L3mgOIFV2X8"),
-
-        HYDQ("bmBh9CByGIc6a1Ii9w6b_hFM3BMRgSR5MeTXaupBsPI"),
-
-        WNB_0("cbo7FB1MeQHBCfg0E-1nTC4zsoP-5_fj4knECgh-Nck"),
-
-        WTCG_NEW("2Ds2T2UhovXUKeoImwNJsL8yIIiGQdBl1JbPdOwLuos"),
-
-        WR_ZD("dSxKNHCm7yq92X-krCvUyJY9Uh-hsJKT0aTO2nRCy_w");
+        YEBZ_WNB("QtkS-I-hSNmEROZ5C_MAIYSy0I8Jn7sSXR1kpCtWvG8");
 
         private String value;
 
@@ -45,25 +35,19 @@ public class ConEnum {
     public enum Menu{
 
         //支付页面
-        PAY("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dpay"),
+        PAY("http%3A%2F%2Fwww.bmbang.cc%2Fauthor%2Fauthor%3Fredirect_url%3Dpay"),
 
         //房源广场
-        FYGC("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dfygc"),
+        FYGC("http%3A%2F%2Fwww.bmbang.cc%2Fauthor%2Fauthor%3Fredirect_url%3Dfygc"),
 
         //订阅设置
-        DYSZ("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Ddysz"),
+        DYSZ("http%3A%2F%2Fwww.bmbang.cc%2Fauthor%2Fauthor%3Fredirect_url%3Ddysz"),
 
         //加入会员
-        JRHY("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dpay"),
+        JRHY("http%3A%2F%2Fwww.bmbang.cc%2Fauthor%2Fauthor%3Fredirect_url%3Dpay"),
 
         //房源详情
-        FYXQ("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dfyxq%26id%3D"),
-
-        GRZX("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dgrzx"),
-
-        YHBZ("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dyhbz"),
-
-        CJ("http%3A%2F%2F" + Constants.service_url + "%2Fauthor%2Fauthor%3Fredirect_url%3Dcj");
+        FYXQ("http%3A%2F%2Fwww.bmbang.cc%2Fauthor%2Fauthor%3Fredirect_url%3Dfyxq");
 
         private String value;
 
@@ -80,19 +64,13 @@ public class ConEnum {
     public enum MenuUrl{
         FYGC("fygc", "/dist/index.html"),
 
-        PAY("pay", "/dist/index.html#myfile_charging"),
+        PAY("pay", "/dist/index.html#user"),
 
-        DYSZ("dysz", "/dist/index.html#filter_step01"),
+        DYSZ("dysz", "/dist/index.html#filter"),
 
-        JRHY("jrhy", "/dist/index.html#myfile_charging"),
+        JRHY("jrhy", "/dist/index.html#user"),
 
-        FYXQ("fyxq", "/dist/details.html#"),
-
-        GRZX("grzx", "/dist/index.html#myfile"),
-
-        YHBZ("yhbz", "/dist/index.html#helpCenter"),
-
-        CJ("cj", "/dist/index.html#lottery");
+        FYXQ("fyxq", "/dist/details.html#");
 
 
         private String key;

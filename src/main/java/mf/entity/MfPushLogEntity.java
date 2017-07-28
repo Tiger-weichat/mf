@@ -23,8 +23,6 @@ public class MfPushLogEntity implements Serializable {
 	private String openId;
 	//
 	private Date createTime;
-	//推送类别
-	public Integer pushType;
 
 	/**
 	 * 设置：
@@ -73,13 +71,5 @@ public class MfPushLogEntity implements Serializable {
 	 */
 	public Date getCreateTime() {
 		return createTime;
-	}
-
-	public Integer getPushType() {
-		return pushType;
-	}
-
-	public void setPushType(Integer pushType) {
-		this.pushType = pushType;
 	}
 }

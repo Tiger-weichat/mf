@@ -84,5 +84,7 @@ public class JsapiTicket {
 		object.put("timeStamp", WXUtil.getTimeStamp());
 		object.put("nonceStr", WXUtil.getNonceStr());
 		object.put("signature", jt.getSignature(String.valueOf(object.get("nonceStr")), String.valueOf(object.get("timeStamp")), null));
+
+		System.out.println(object.toJSONString());
 	}
 }

@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryObjectByOpenId" resultType="mf.entity.MfHouseClickEntity">
-		select * from mf_house_click where open_id = #{openId} and `house_id` = #{houseId} limit 1
+		select * from mf_house_click where open_id = #{value}
 	</select>
 
 	<select id="queryList" resultType="mf.entity.MfHouseClickEntity">
@@ -28,12 +28,8 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from mf_house_click
-		where 1 = 1
 		<if test="houseId != null">
 			and `house_id` = #{houseId}
-		</if>
-		<if test="openId != null">
-			and `open_id` = #{openId}
 		</if>
 	</select>
 	 

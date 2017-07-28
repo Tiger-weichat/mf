@@ -10,5 +10,5 @@ import mf.entity.MfRechargeOrderEntity;
  * @date 2017-03-12 11:36:21
  */
 public interface MfRechargeOrderDao extends BaseDao<MfRechargeOrderEntity> {
-	MfRechargeOrderEntity queryObjectByOrderNo(Object id);
+	
 }

@@ -2,9 +2,6 @@ package mf.dao;
 
 import mf.entity.MfAreaEntity;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * 地理信息表（以58为准）
  * 
@@ -13,6 +10,5 @@ import java.util.Map;
  * @date 2017-03-05 10:40:24
  */
 public interface MfAreaDao extends BaseDao<MfAreaEntity> {
-
-	List<Map<String, Object>> queryListByParentCode(Integer code);
+	
 }

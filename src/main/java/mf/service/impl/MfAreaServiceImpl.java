@@ -51,12 +51,5 @@ public class MfAreaServiceImpl implements MfAreaService {
 	public void deleteBatch(Long[] ids){
 		mfAreaDao.deleteBatch(ids);
 	}
-
-	@Override
-	public List<Map<String, Object>> queryListByParentCode(Integer code) {
-
-		List<Map<String, Object>> list = mfAreaDao.queryListByParentCode(code);
-
-		return list;
-	}
+	
 }

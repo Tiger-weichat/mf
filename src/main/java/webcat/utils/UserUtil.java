@@ -14,28 +14,25 @@ public class UserUtil {
 
         JSONObject user = new JSONObject();
 
-        if(entity != null ){
-            user.put("open_id", entity.getOpenId());
-            user.put("mobile", entity.getMobile());
-            user.put("expire_date", entity.getExpireDate());
-            try {
-                user.put("nickname", URLDecoder.decode(entity.getNickname(), "UTF-8"));
-            } catch (Exception e) {
-                user.put("nickname", "/");
-            }
-            user.put("headimgurl", entity.getHeadimgurl());
-            user.put("sex", entity.getSex());
-            user.put("city", entity.getCity());
-            user.put("country", entity.getCountry());
-            user.put("province", entity.getProvince());
-            user.put("remark", entity.getRemark());
-            user.put("wnb", entity.getWnb());
-            user.put("lave_days", entity.getLaveDays());
-            user.put("collect_count", entity.getCollectCount());
-            user.put("wr_set", entity.getWrStatus());
-            user.put("signature", entity.getSignature());
-            user.put("createdate", entity.getCreateTime());
+        user.put("open_id", entity.getOpenId());
+        user.put("mobile", entity.getMobile());
+        user.put("expire_date", entity.getExpireDate());
+        try {
+            user.put("nickname", URLDecoder.decode(entity.getNickname(), "UTF-8"));
+        } catch (Exception e) {
+            user.put("nickname", "/");
         }
+        user.put("headimgurl", entity.getHeadimgurl());
+        user.put("sex", entity.getSex());
+        user.put("city", entity.getCity());
+        user.put("country", entity.getCountry());
+        user.put("province", entity.getProvince());
+        user.put("remark", entity.getRemark());
+        user.put("wnb", entity.getWnb());
+        user.put("lave_days", entity.getLaveDays());
+        user.put("collect_count", entity.getCollectCount());
+        user.put("wr_set", entity.getWrStatus());
+        user.put("signature", entity.getSignature());
 
         return user;
     }

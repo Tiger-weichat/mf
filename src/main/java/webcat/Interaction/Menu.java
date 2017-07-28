@@ -24,28 +24,37 @@ public class Menu {
         menu.append("         \"name\":\"房源广场\",");
         menu.append("         \"url\":\"" + getMenuUrl(ConEnum.Menu.FYGC.getValue()) + "\"");
         menu.append("     },");
-        menu.append("    {");
-        menu.append("         \"type\":\"view\",");
-        menu.append("         \"name\":\"签到抽奖\",");
-        menu.append("         \"url\":\"" + getMenuUrl(ConEnum.Menu.CJ.getValue()) + "\"");
-        menu.append("     },");
+        menu.append("     {");
+        menu.append("          \"name\":\"设置\",");
+        menu.append("          \"sub_button\":[");
+        menu.append("           {");
+        menu.append("              \"type\":\"click\",");
+        menu.append("              \"name\":\"勿扰模式\",");
+        menu.append("              \"key\":\"wrset\"");
+        menu.append("           },");
+        menu.append("           {");
+        menu.append("              \"type\":\"view\",");
+        menu.append("              \"name\":\"订阅设置\",");
+        menu.append("              \"url\":\"" + getMenuUrl(ConEnum.Menu.DYSZ.getValue()) + "\"");
+        menu.append("           }]");
+        menu.append("      },");
         menu.append("     {");
         menu.append("          \"name\":\"我的\",");
         menu.append("          \"sub_button\":[");
         menu.append("           {");
         menu.append("              \"type\":\"view\",");
-        menu.append("              \"name\":\"立即充值\",");
+        menu.append("              \"name\":\"充值中心\",");
         menu.append("              \"url\":\"" + getMenuUrl(ConEnum.Menu.JRHY.getValue()) + "\"");
         menu.append("           },");
         menu.append("           {");
         menu.append("              \"type\":\"view\",");
         menu.append("              \"name\":\"个人中心\",");
-        menu.append("              \"url\":\"" + getMenuUrl(ConEnum.Menu.GRZX.getValue()) + "\"");
+        menu.append("              \"url\":\"" + getMenuUrl(ConEnum.Menu.JRHY.getValue()) + "\"");
         menu.append("           },");
         menu.append("           {");
-        menu.append("              \"type\":\"click\",");
-        menu.append("              \"name\":\"勿扰模式\",");
-        menu.append("              \"key\":\"wrset\"");
+        menu.append("              \"type\":\"view\",");
+        menu.append("              \"name\":\"用户帮助\",");
+        menu.append("              \"url\":\"" + getMenuUrl(ConEnum.Menu.JRHY.getValue()) + "\"");
         menu.append("           },");
         menu.append("           {");
         menu.append("              \"type\":\"click\",");
@@ -75,7 +84,7 @@ public class Menu {
     }
 
     public static void main(String[] args) {
-        System.out.print(Menu.getMenuUrl(ConEnum.Menu.CJ.getValue()));
+        System.out.println(getMenuUrl(ConEnum.Menu.FYGC.getValue()));
     }
 
 }

@@ -1,6 +1,5 @@
 package mf.service.impl;
 
-import mf.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,18 +34,11 @@ public class MfRechargeServiceImpl implements MfRechargeService {
 	
 	@Override
 	public void save(MfRechargeEntity mfRecharge){
-
-		mfRecharge.setCreateTime(DateUtils.getTodayDate());
-		mfRecharge.setUpdateTime(DateUtils.getTodayDate());
-
 		mfRechargeDao.save(mfRecharge);
 	}
 	
 	@Override
 	public void update(MfRechargeEntity mfRecharge){
-
-		mfRecharge.setUpdateTime(DateUtils.getTodayDate());
-
 		mfRechargeDao.update(mfRecharge);
 	}
 	

@@ -30,7 +30,7 @@ public class AccessToken {
 		HttpClientUtils hc = new HttpClientUtils();
 		
 		String mes = hc.get(send_url);
-
+		
 		JSONObject mesMap = JSON.parseObject(mes);
 
 		//正确

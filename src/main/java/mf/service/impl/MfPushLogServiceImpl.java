@@ -1,7 +1,6 @@
 package mf.service.impl;
 
 import mf.entity.MfHouseInfoEntity;
-import mf.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,23 +56,5 @@ public class MfPushLogServiceImpl implements MfPushLogService {
 	@Override
 	public List<MfHouseInfoEntity> queryMyHouse(Map<String, Object> map) {
 		return mfPushLogDao.queryMyHouse(map);
-	}
-
-	@Override
-	public void deleteByOpenId(String openId) {
-		mfPushLogDao.deleteByOpenId(openId);
-	}
-
-	@Override
-	public void savePushLog(String openId, Integer houseId, Integer pushType){
-
-		MfPushLogEntity entity = new MfPushLogEntity();
-
-		entity.setOpenId(openId);
-		entity.setHouseId(houseId);
-		entity.setCreateTime(DateUtils.getTodayDate());
-		entity.setPushType(pushType);
-
-		mfPushLogDao.save(entity);
 	}
 }

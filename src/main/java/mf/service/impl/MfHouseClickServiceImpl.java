@@ -97,33 +97,28 @@ public class MfHouseClickServiceImpl implements MfHouseClickService {
 	}
 
 	@Override
-	public MfHouseClickEntity queryObjectByOpenId(String id, String houseId) {
+	public MfHouseClickEntity queryObjectByOpenId(String id) {
+
+		MfHouseClickEntity entity = mfHouseClickDao.queryObjectByOpenId(id);
 
 		Map<String, Object> map = new HashMap<String, Object>();
 
+		map.put("clickId", entity.getId());
+
+		entity.setLikes(mfHouseClickLikeService.queryTotal(map));
+
+		entity.setUser(mfUserService.queryObject(entity.getOpenId()));
+
+		//查询自己是否点赞过
+		map.clear();
 		map.put("openId", id);
-		map.put("houseId", houseId);
-		MfHouseClickEntity entity = mfHouseClickDao.queryObjectByOpenId(map);
-
-		if(entity != null){
-			map.clear();
-			map.put("clickId", entity.getId());
-
-			entity.setLikes(mfHouseClickLikeService.queryTotal(map));
-
-			entity.setUser(mfUserService.queryObject(entity.getOpenId()));
-
-			//查询自己是否点赞过
-			map.clear();
-			map.put("openId", id);
-			map.put("clickId", entity.getId());
-			MfHouseClickLikeEntity temp = mfHouseClickLikeService.queryMylike(map);
-			if(temp == null){
-				entity.setIsliked(0);
-			}
-			else{
-				entity.setIsliked(1);
-			}
+		map.put("clickId", entity.getId());
+		MfHouseClickLikeEntity temp = mfHouseClickLikeService.queryMylike(map);
+		if(temp == null){
+			entity.setIsliked(0);
+		}
+		else{
+			entity.setIsliked(1);
 		}
 
 		return entity;

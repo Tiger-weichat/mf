@@ -33,8 +33,6 @@ public class MfHouseClickEntity implements Serializable {
 	//个性签名
 	private String signature;
 
-	private int rank;
-
 	//用户信息
 	private MfUserEntity user = new MfUserEntity();
 
@@ -117,13 +115,5 @@ public class MfHouseClickEntity implements Serializable {
 
 	public void setSignature(String signature) {
 		this.signature = signature;
-	}
-
-	public int getRank() {
-		return rank;
-	}
-
-	public void setRank(int rank) {
-		this.rank = rank;
 	}
 }

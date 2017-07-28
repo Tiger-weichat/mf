@@ -18,7 +18,6 @@ public class AreaUtil {
         area.put("id", entity.getId());
         area.put("name", entity.getName());
         area.put("code", entity.getCode());
-        area.put("parentCode", entity.getParentCode());
 
         return area;
     }

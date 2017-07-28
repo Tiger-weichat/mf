@@ -23,18 +23,12 @@ public class AuthorizationController extends AbstractController{
 		
 		String code = request.getParameter("code");
 		String redirect_url = request.getParameter("redirect_url");
-		String id = request.getParameter("id");
 		String openid = getOAuthOpenId(Constants.appID, Constants.appsecret, code);
 		if(StringUtils.isNotBlank(openid)){
-			logger.info("set open_id"+openid);
 			session.setAttribute("open_id", openid);
 		}
-		if(StringUtils.isNotBlank(id)){
-			return new ModelAndView("redirect:" + ConEnum.MenuUrl.getValue(redirect_url) + id);
-		}
-		else{
-			return new ModelAndView("redirect:" + ConEnum.MenuUrl.getValue(redirect_url));
-		}
+
+		return new ModelAndView("redirect:" + ConEnum.MenuUrl.getValue(redirect_url));
 	}
 	
 	/**

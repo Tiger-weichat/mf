@@ -41,7 +41,6 @@ public class HouseUtils {
         if(StringUtils.isNotBlank(entity.getTags())){
             obj.put("tags", entity.getTags().split(","));
         }
-        obj.put("iscollected", entity.getIscollected());
 
         return obj;
     }
@@ -59,7 +58,7 @@ public class HouseUtils {
         return array;
     }
 
-    public static JSONObject getCollect(List<MfHouseInfoEntity> entityList, int count){
+    public static JSONObject getCollect(List<MfHouseInfoEntity> entityList){
 
         JSONObject json = new JSONObject();
 
@@ -71,7 +70,7 @@ public class HouseUtils {
 
         }
 
-        json.put("total_count", count);
+        json.put("total_count", entityList.size());
         json.put("data", array);
 
         return json;

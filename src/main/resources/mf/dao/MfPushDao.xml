@@ -10,7 +10,6 @@
 	<select id="queryList" resultType="mf.entity.MfPushEntity">
 		select * from mf_push
 		where `status` = 1
-		and `system` = #{system}
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -43,8 +42,7 @@
 			`qz_price`,
 			`push_area`, 
 			`real_push_area`, 
-			`status`,
-			`system`
+			`status`
 		)
 		values
 		(
@@ -68,8 +66,7 @@
 			#{qzPrice},
 			#{pushArea}, 
 			#{realPushArea}, 
-			#{status},
-			#{system}
+			#{status}
 		)
 	</insert>
 	 
@@ -90,9 +87,9 @@
 			<if test="rentArea != null">`rent_area` = #{rentArea}, </if>
 			<if test="rentPrice != null">`rent_price` = #{rentPrice}, </if>
 			<if test="isQz != null">`is_qz` = #{isQz}, </if>
-			<if test="qzType != null">`qz_type` = #{qzType}, </if>
-			<if test="qzArea != null">`qz_area` = #{qzArea}, </if>
-			<if test="qzPrice != null">`qz_price` = #{qzPrice}, </if>
+			<if test="qzType != null">`qz_type` = #{qz Type}, </if>
+			<if test="qzArea != null">`qz_area` = #{qz Area}, </if>
+			<if test="qzPrice != null">`qz_price` = #{qz Price}, </if>
 			<if test="pushArea != null">`push_area` = #{pushArea}, </if>
 			<if test="realPushArea != null">`real_push_area` = #{realPushArea}, </if>
 			<if test="status != null">`status` = #{status}</if>
@@ -100,10 +97,13 @@
 		where open_id = #{openId}
 	</update>
 	
-	<delete id="delete">
-		delete from mf_push
+	<update id="delete">
+		update mf_push
+		<set>
+			`status` = 0
+		</set>
 		where open_id = #{value}
-	</delete>
+	</update>
 	
 	<delete id="deleteBatch">
 		delete from mf_push where open_id in 

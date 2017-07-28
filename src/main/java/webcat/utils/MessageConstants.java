@@ -1,10 +1,11 @@
 package webcat.utils;
 
 import webcat.entity.MessageEntity;
-import webcat.entity.VIPMessageEntity;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 
 /**
  * Created by dengfan on 2017/3/7.
@@ -20,34 +21,18 @@ public class MessageConstants {
     /**
      * 夜间模式需要推送的消息
      */
-    public static Map<String, Integer> NIGHT_HOUSE_MESSAGE = new ConcurrentHashMap<String, Integer>();
+    public static Map<String, Integer> NIGHT_HOUSE_MESSAGE = new HashMap<String, Integer>();
 
 
     /**
      * 勿扰模式推送消息
      */
-    public static Map<String, Integer> WR_HOUSE_MESSAGE = new ConcurrentHashMap<String, Integer>();
-
-    /**
-     * 包月正点消息
-     */
-    public static Map<String, Integer> ZD_HOUSE_MESSAGE = new ConcurrentHashMap<String, Integer>();
+    public static Map<String, Integer> WR_HOUSE_MESSAGE = new HashMap<String, Integer>();
 
     /**
      * 48小时未互动
      */
     private static Queue<String> HOUS48 = new ArrayDeque<String>();
-
-
-    /**
-     * 需要排除的用户
-     */
-    public static Map<String, Date> OUT_PUSH = new ConcurrentHashMap<String, Date>();
-
-    /**
-     * 会员到期
-     */
-    public static List<VIPMessageEntity> VIP_LIST = new ArrayList<VIPMessageEntity>();
 
 
     /**
@@ -84,24 +69,6 @@ public class MessageConstants {
             count ++;
         }
         WR_HOUSE_MESSAGE.put(openId, count);
-    }
-
-    /**
-     * 正点消息+1
-     * @param openId
-     */
-    public static void addZd(String openId){
-
-        Integer count = ZD_HOUSE_MESSAGE.get(openId);
-
-        if(count == null){
-            count = 1;
-        }
-        else{
-            count ++;
-        }
-
-        ZD_HOUSE_MESSAGE.put(openId, count);
     }
 
     /**

@@ -11,13 +11,11 @@
      	http://www.springframework.org/schema/aop 
      	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-    <context:property-placeholder location="classpath:db.properties" />
-
 	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="quartzProperties">
             <props>
-                <prop key="org.quartz.scheduler.instanceName">${qz.instanceName}</prop>
+                <prop key="org.quartz.scheduler.instanceName">RenrenScheduler</prop>
                 <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
                 <!-- 线程池配置 -->
                 <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
@@ -26,7 +24,7 @@
                 <!-- JobStore 配置 -->
                 <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
                 <!-- 集群配置 -->
-                <prop key="org.quartz.jobStore.isClustered">false</prop>
+                <prop key="org.quartz.jobStore.isClustered">true</prop>
                 <prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
                 <prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">1</prop>
                 
@@ -36,7 +34,7 @@
             </props>
         </property>
 
-        <property name="schedulerName" value="${qz.instanceName}" />
+        <property name="schedulerName" value="RenrenScheduler" />
 
         <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 -->
         <property name="startupDelay" value="60" />

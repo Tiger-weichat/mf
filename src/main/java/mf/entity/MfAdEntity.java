@@ -24,8 +24,6 @@ public class MfAdEntity implements Serializable {
 	//
 	private Integer status;
 
-	private Integer type;
-
 	/**
 	 * 设置：
 	 */
@@ -73,13 +71,5 @@ public class MfAdEntity implements Serializable {
 	 */
 	public Integer getStatus() {
 		return status;
-	}
-
-	public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
 	}
 }

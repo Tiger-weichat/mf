@@ -1,25 +1,17 @@
 package webcat.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
 import com.alibaba.fastjson.JSONObject;
-import mf.entity.MfPushEntity;
 import mf.entity.MfRechargeEntity;
 import mf.entity.MfRechargeOrderEntity;
 import mf.entity.MfUserEntity;
-import mf.service.MfPushService;
 import mf.service.MfRechargeOrderService;
 import mf.service.MfRechargeService;
 import mf.service.MfUserService;
-import mf.utils.Constant;
 import mf.utils.DateUtils;
 import mf.utils.WXUtil;
 import mf.utils.XMLUtil;
 import org.apache.commons.lang.StringUtils;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +19,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import webcat.Interaction.JsapiTicket;
-import webcat.Interaction.Template;
 import webcat.entity.ParamData;
 import webcat.utils.Constants;
 import webcat.utils.pay.PayCommonUtil;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * 支付接口
@@ -48,8 +46,6 @@ public class PayController extends AbstractController {
     private MfRechargeOrderService mfRechargeOrderService;
     @Autowired
     private MfUserService mfUserService;
-    @Autowired
-    private MfPushService mfPushService;
 
     /**
      * 获取支付环境
@@ -85,7 +81,7 @@ public class PayController extends AbstractController {
 
         ParamData pd = this.getParamData();
 
-        String id = pd.getString("push_id");
+        String id = pd.getString("id");
 
         if(StringUtils.isBlank(id) || StringUtils.isBlank(getOpenId())){
             return sendFailure("充值ID错误.");
@@ -103,28 +99,22 @@ public class PayController extends AbstractController {
         //支付金额（分）
         String payFee = (int)Math.floor(Double.parseDouble(String.valueOf(rechargeEntity.getPrice())) * 100) + "";
         //消息体
-        String body = Constant.WEBCATNAME;
+        String body = "蜗牛秒房充值：" + rechargeEntity.getTitle();
 
         try {
-
-            String open_id = getOpenId();
-
-            Map<String, String> map = PayCommonUtil.getPrepayId(payFee, ipAddress, orderNumber, body, open_id);
+            Map<String, String> map = PayCommonUtil.getPrepayId(payFee, ipAddress, orderNumber, body, getOpenId());
             String  prepay_id = map.get("prepay_id");
 
-            MfUserEntity user = mfUserService.queryObject(open_id);
             //保存充值信息-状态为待支付
             MfRechargeOrderEntity order = new MfRechargeOrderEntity();
             order.setOpenId(getOpenId());
             order.setStatus(0);
-            order.setNickname(user.getNickname());
             order.setCreateTime(DateUtils.getTodayDate());
             order.setDes(body);
             order.setOrderNo(orderNumber);
-            order.setTitle(rechargeEntity.getTitle() + "-价格：" + rechargeEntity.getPrice());
+            order.setTitle(rechargeEntity.getTitle());
             order.setId(orderNumber);
             order.setRechargeId(rechargeEntity.getId());
-            order.setOrderType(2);
 
             if(rechargeEntity.getType() == 1){
                 order.setOperType("包月服务");
@@ -146,7 +136,7 @@ public class PayController extends AbstractController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/callback", produces = "application/xml")
+    @RequestMapping("/callback")
     public String callback(){
 
         try {
@@ -161,8 +151,6 @@ public class PayController extends AbstractController {
             }
             String xml = sb.toString();	//次即为接收到微信端发送过来的xml数据
 
-            logger.info("充值成功回调：" + xml);
-
             Map<String, String> xmlMap = XMLUtil.doXMLParse(xml);
             //获取订单ID
             String orderNumber = xmlMap.get("out_trade_no");
@@ -175,60 +163,31 @@ public class PayController extends AbstractController {
                     if (orderMap.get("trade_state") != null&& orderMap.get("trade_state").equalsIgnoreCase("SUCCESS")) {
 
                         //支付成功，调用方法
-                        Template t = new Template();
+
                         //更改订单状态
-                        MfRechargeOrderEntity order = mfRechargeOrderService.queryObjectByOrderNo(orderNumber);
+                        MfRechargeOrderEntity order = new MfRechargeOrderEntity();
+                        order.setId(orderNumber);
+                        order.setStatus(1);
+                        mfRechargeOrderService.update(order);
+                        //更改用户状态
 
-                        if(order != null && order.getStatus() == 0){
+                        MfRechargeEntity rechargeEntity = mfRechargeService.queryObject(order.getRechargeId());
+                        MfUserEntity user = mfUserService.queryObject(order.getOpenId());
 
-                            MfUserEntity user = mfUserService.queryObject(open_id);
-
-                            order.setStatus(1);
-                            order.setNickname(user.getNickname());
-                            order.setOpenId(user.getOpenId());
-
-                            mfRechargeOrderService.update(order);
-                            //更改用户状态
-
-                            MfRechargeEntity rechargeEntity = mfRechargeService.queryObject(order.getRechargeId());
-
-                            Date beginTime = null;
-
-                            if(rechargeEntity.getType() == 1){
-                                if(user.getExpireDate() != null && user.getExpireDate().getTime() > DateUtils.getTodayDate().getTime()){
-                                    beginTime = user.getExpireDate();
-                                    user.setExpireDate(DateUtils.getFetureDate(user.getExpireDate(), Integer.valueOf(rechargeEntity.getDays())));
-                                }
-                                else{
-                                    beginTime = DateUtils.getTodayDate();
-                                    user.setExpireDate(DateUtils.getFetureDate(Integer.valueOf(rechargeEntity.getDays())));
-                                }
-
-//                                mfRechargeOrderService.addOrder(order.getOpenId(), order.getTitle(), "包月服务", rechargeEntity.getDays() + "天");
-
-                                //发送提醒消息
-                                t.sendCztxBy(order.getOpenId(), rechargeEntity.getPrice(), Integer.valueOf(rechargeEntity.getDays()), beginTime, DateUtils.getFetureDate(beginTime, Integer.valueOf(rechargeEntity.getDays())));
-
-                                mfUserService.update(user);
+                        if(rechargeEntity.getType() == 1){
+                            if(DateUtils.daysBetween(user.getExpireDate(), DateUtils.getTodayDate()) < 0){
+                                user.setExpireDate(DateUtils.getFetureDate(user.getExpireDate(), Integer.valueOf(rechargeEntity.getDays())));
                             }
-                            else if(rechargeEntity.getType() == 2){
-                                user.setWnb(user.getWnb() + rechargeEntity.getWnb());
-
-//                                mfRechargeOrderService.addOrder(order.getOpenId(), order.getTitle(), "蜗牛壳", "+" + rechargeEntity.getWnb());
-
-                                //发送消息提醒
-                                t.sendCztxWnb(order.getOpenId(), rechargeEntity.getPrice(), user.getWnb(), DateUtils.getTodayDate());
-
-                                //更新蜗牛币状态
-                                mfUserService.update(user);
-                            }
-                            //为用户开启推送配置
-                            MfPushEntity pushEntity = mfPushService.queryObject(user.getOpenId());
-                            if(pushEntity != null){
-                                pushEntity.setStatus(1);
-                                mfPushService.update(pushEntity);
+                            else{
+                                user.setExpireDate(DateUtils.getFetureDate(Integer.valueOf(rechargeEntity.getDays())));
                             }
                         }
+                        else if(rechargeEntity.getType() == 2){
+                            user.setWnb(user.getWnb() + rechargeEntity.getWnb());
+                        }
+                        mfUserService.update(user);
+
+                        return "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
                     }
                 }
             }

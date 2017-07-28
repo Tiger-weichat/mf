@@ -34,12 +34,6 @@ public class MfRechargeOrderEntity implements Serializable {
 
 	private String operType;
 
-	private String nickname;
-
-	private Integer orderType;
-
-	private Integer houseId;
-
 	/**
 	 * 设置：
 	 */
@@ -135,29 +129,5 @@ public class MfRechargeOrderEntity implements Serializable {
 
 	public void setOperType(String operType) {
 		this.operType = operType;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
-	public Integer getOrderType() {
-		return orderType;
-	}
-
-	public void setOrderType(Integer orderType) {
-		this.orderType = orderType;
-	}
-
-	public Integer getHouseId() {
-		return houseId;
-	}
-
-	public void setHouseId(Integer houseId) {
-		this.houseId = houseId;
 	}
 }

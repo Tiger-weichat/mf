@@ -34,7 +34,6 @@ public class MfAdServiceImpl implements MfAdService {
 	
 	@Override
 	public void save(MfAdEntity mfAd){
-		mfAd.setStatus(1);
 		mfAdDao.save(mfAd);
 	}
 	

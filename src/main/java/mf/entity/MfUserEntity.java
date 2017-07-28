@@ -65,19 +65,6 @@ public class MfUserEntity implements Serializable {
 	private Integer collectCount;
 	//是否设置了勿扰模式 0 没有 ；1 有
 	private Integer wrStatus;
-	//系统来源
-	private Integer system;
-
-	private Date wnbEndTime;
-
-	//充值次数
-	private Integer czCount;
-
-	//订阅类型
-	private String dyType;
-
-	//订阅地区
-	private String dyArea;
 
 	/**
 	 * 设置：
@@ -334,45 +321,5 @@ public class MfUserEntity implements Serializable {
 
 	public void setWrStatus(Integer wrStatus) {
 		this.wrStatus = wrStatus;
-	}
-
-	public Integer getSystem() {
-		return system;
-	}
-
-	public void setSystem(Integer system) {
-		this.system = system;
-	}
-
-	public Date getWnbEndTime() {
-		return wnbEndTime;
-	}
-
-	public void setWnbEndTime(Date wnbEndTime) {
-		this.wnbEndTime = wnbEndTime;
-	}
-
-	public Integer getCzCount() {
-		return czCount;
-	}
-
-	public void setCzCount(Integer czCount) {
-		this.czCount = czCount;
-	}
-
-	public String getDyType() {
-		return dyType;
-	}
-
-	public void setDyType(String dyType) {
-		this.dyType = dyType;
-	}
-
-	public String getDyArea() {
-		return dyArea;
-	}
-
-	public void setDyArea(String dyArea) {
-		this.dyArea = dyArea;
 	}
 }

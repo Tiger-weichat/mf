@@ -53,7 +53,3 @@ html { overflow-x:hidden; }
 	.form-horizontal{
 		width:550px;padding-top:20px;
 	}
-.jqGrid-img{
-	max-width: 300px;
-	max-height: 30px;
-}

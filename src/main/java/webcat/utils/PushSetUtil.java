@@ -22,7 +22,7 @@ public class PushSetUtil {
      */
     public static void setPush(MfPushEntity entity){
 
-        String areaCode = entity.getPushArea().replaceAll("\"", "");
+        String areaCode = entity.getRealPushArea();
 
         if(StringUtils.isNotBlank(areaCode)){
 
@@ -33,7 +33,7 @@ public class PushSetUtil {
                 try {
                     map = PushCache.cache.get(code, new Callable<Map<String, MfPushEntity>>(){
                         public Map<String, MfPushEntity> call(){
-                            return new HashMap<String, MfPushEntity>();
+                            return null;
                         }
                     });
                 } catch (ExecutionException e) {

@@ -3,7 +3,6 @@ package mf.controller;
 import mf.entity.ScheduleJobEntity;
 import mf.service.ScheduleJobService;
 import mf.utils.PageUtils;
-import mf.utils.PropertyUtil;
 import mf.utils.R;
 import mf.utils.RRException;
 
@@ -41,8 +40,6 @@ public class ScheduleJobController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-
-		map.put("system", PropertyUtil.getProperty("system"));
 		
 		//查询列表数据
 		List<ScheduleJobEntity> jobList = scheduleJobService.queryList(map);

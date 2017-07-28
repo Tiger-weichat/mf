@@ -67,7 +67,7 @@ public class MfHouseInfoController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{id}")
-//	@RequiresPermissions("mfhouseinfo:info")
+	@RequiresPermissions("mfhouseinfo:info")
 	public R info(@PathVariable("id") Long id){
 		MfHouseInfoEntity mfHouseInfo = mfHouseInfoService.queryObject(id);
 		

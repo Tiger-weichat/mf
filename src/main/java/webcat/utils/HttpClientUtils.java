@@ -59,7 +59,7 @@ public class HttpClientUtils {
 		try {
 			// 创建httpget.
 			HttpGet httpget = new HttpGet(url);
-//			System.out.println("executing request " + httpget.getURI());
+			System.out.println("executing request " + httpget.getURI());
 			// 执行get请求.
 			CloseableHttpResponse response = httpclient.execute(httpget);
 

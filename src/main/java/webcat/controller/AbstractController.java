@@ -73,13 +73,6 @@ public abstract class AbstractController {
         return mes;
     }
 
-    public JSONObject sendSuccess(String key, Object value){
-        JSONObject mes = new JSONObject();
-        mes.put("code", "success");
-        mes.put(key, value);
-        return mes;
-    }
-
     public JSONObject sendFailure(){
         JSONObject mes = new JSONObject();
         mes.put("code", "failure");
@@ -94,11 +87,7 @@ public abstract class AbstractController {
     }
 
     protected String getOpenId(){
-
-		String open_id = (String) session.getAttribute("open_id");
-		if(open_id == null){
-			open_id = "o9F5mwR50Gu62r-7SQIMxcQG5Tps";
-		}
-    	return open_id;
+        return (String)session.getAttribute("open_id");
+//        return "oBrPNwJTUAvMgxKkirgT9xLGlo2c";
     }
 }

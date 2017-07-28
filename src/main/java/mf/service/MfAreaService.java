@@ -27,6 +27,4 @@ public interface MfAreaService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
-
-	List<Map<String, Object>> queryListByParentCode(Integer code);
 }

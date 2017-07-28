@@ -20,26 +20,21 @@ public class AdUtil {
         ad.put("id", entity.getId());
         ad.put("title", entity.getTitle());
         ad.put("url", entity.getUrl());
-        ad.put("type", entity.getType());
 
         //获取最后一次的显示时间
-        if(user != null){
-            Date lastShowTime = user.getAdShow();
-            if(lastShowTime == null){
+        Date lastShowTime = user.getAdShow();
+        if(lastShowTime == null){
+            ad.put("show", 1);
+        }
+        else{
+            if(DateUtils.hourBetween(lastShowTime, DateUtils.getTodayDate()) > 48){
                 ad.put("show", 1);
             }
             else{
-                if(DateUtils.hourBetween(lastShowTime, DateUtils.getTodayDate()) > 48){
-                    ad.put("show", 1);
-                }
-                else{
-                    ad.put("show", 0);
-                }
+                ad.put("show", 0);
             }
         }
-        else{
-            ad.put("show", 1);
-        }
+
         return ad;
     }
 

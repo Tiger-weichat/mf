@@ -1,8 +1,6 @@
 package webcat.Interaction;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import webcat.utils.ConEnum;
 import webcat.utils.HttpClientUtils;
 import webcat.utils.ReturnMessage;
@@ -13,8 +11,6 @@ import webcat.utils.ReturnMessage;
 public class Message {
 
 	private final String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * 发送文本消息
@@ -36,11 +32,7 @@ public class Message {
 		msg.append("}");
 		
 		HttpClientUtils hc = new HttpClientUtils();
-		String mes = hc.post(send_url, msg.toString());
-
-		logger.info("发送文本消息：" + mes);
-
-		return ReturnMessage.getReturnCode(mes);
+		return ReturnMessage.getReturnCode(hc.post(send_url, msg.toString()));
 	}
 
 	/**

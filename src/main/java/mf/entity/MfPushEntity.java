@@ -87,8 +87,6 @@ public class MfPushEntity implements Serializable {
 	private String realPushArea;
 	//状态 1 正常推送 2 不推送
 	private Integer status;
-	//系统
-	private Long system;
 
 	/**
 	 * 设置：
@@ -401,13 +399,5 @@ public class MfPushEntity implements Serializable {
 	 */
 	public Integer getStatus() {
 		return status;
-	}
-
-	public Long getSystem() {
-		return system;
-	}
-
-	public void setSystem(Long system) {
-		this.system = system;
 	}
 }

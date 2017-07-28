@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by admin on 2017/5/25.
+ * Created by xzhan on 2017/5/25.
  */
 public class PrizeUtil {
 

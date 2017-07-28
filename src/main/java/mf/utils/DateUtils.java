@@ -21,7 +21,7 @@ public class DateUtils {
 
 	public final static String TIME_PATTERN = "HH:mm:ss";
 
-	public final static String DATE_TIME_PATTERN_CN = "yyyy年MM月dd日 HH:mm";
+	public final static String DATE_TIME_PATTERN_CN = "yyyy年MM月DD日 HH:mm";
 	
 	public static String format(Date date) {
         return format(date, DATE_PATTERN);
@@ -128,27 +128,8 @@ public class DateUtils {
         return hours;
     }
 
-
-    public static boolean isNight(){
-        int h = getHour();
-
-        if(h >= 21 || h < 8  ){
-            return true;
-        }
-        return false;
-    }
-
-    public static Date getToday10AM(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime();
-    }
-
-
     public static void main(String[] args) {
-        System.out.println(DateUtils.getToday10AM());
+        System.out.println(DateUtils.format(DateUtils.getTodayDate(), DATE_TIME_PATTERN_CN));
     }
 
 }

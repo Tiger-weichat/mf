@@ -4,7 +4,7 @@
 <mapper namespace="mf.dao.MfAreaDao">
 
 	<select id="queryObject" resultType="mf.entity.MfAreaEntity">
-		select * from mf_area where `code` = #{value}
+		select * from mf_area where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="mf.entity.MfAreaEntity">
@@ -19,13 +19,6 @@
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
-	</select>
-
-
-	<select id="queryListByParentCode" statementType="CALLABLE" resultType="java.util.Map">
-		{
-		call pro_get(#{value})
-		}
 	</select>
 	
  	<select id="queryTotal" resultType="int">

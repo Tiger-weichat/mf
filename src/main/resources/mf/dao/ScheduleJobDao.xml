@@ -8,9 +8,6 @@
 
 	<select id="queryList" resultType="mf.entity.ScheduleJobEntity" >
 		select * from schedule_job
-		<if test="system != null">
-			where `system` = #{system}
-		</if>
 		<if test="offset != null and limit != null ">
 		limit #{offset}, #{limit}
 		</if>
@@ -29,8 +26,7 @@
 			`cron_expression`, 
 			`status`, 
 			`remark`, 
-			`create_time`,
-			`system`
+			`create_time`
 		)
 		values
 		(
@@ -40,8 +36,7 @@
 			#{cronExpression}, 
 			#{status}, 
 			#{remark}, 
-			#{createTime},
-			#{system}
+			#{createTime}
 		)
 	</insert>
 	 
@@ -54,7 +49,6 @@
 			<if test="cronExpression != null">`cron_expression` = #{cronExpression}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="system != null">`system` = #{system}</if>
 		</set>
 		where job_id = #{jobId}
 	</update>

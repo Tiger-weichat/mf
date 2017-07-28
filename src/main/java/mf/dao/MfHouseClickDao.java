@@ -3,8 +3,6 @@ package mf.dao;
 import mf.entity.MfHouseClickEntity;
 import mf.entity.MfHouseInfoEntity;
 
-import java.util.Map;
-
 /**
  * 
  * 
@@ -14,6 +12,6 @@ import java.util.Map;
  */
 public interface MfHouseClickDao extends BaseDao<MfHouseClickEntity> {
 
-    MfHouseClickEntity queryObjectByOpenId(Map<String, Object> map);
+    MfHouseClickEntity queryObjectByOpenId(String id);
 
 }

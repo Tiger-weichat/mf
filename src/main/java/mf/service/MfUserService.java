@@ -51,10 +51,4 @@ public interface MfUserService {
 	 * @return
 	 */
 	List<MfUserEntity> get3DayUser();
-
-	/**
-	 * 扣除蜗牛币
-	 * @param openId
-	 */
-	void deductions(String openId, String title, String oper, String dec, Integer type, Integer houseId);
 }

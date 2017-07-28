@@ -8,10 +8,8 @@
 	</select>
 
 	<select id="queryMyCollect" resultType="mf.entity.MfHouseInfoEntity">
-		select a.* from mf_house_info a, mf_house_collect b
-		where a.id = b.house_id
-		and b.open_id=#{openId}
-		order by b.create_time desc
+		select * from mf_house_info
+		where id in (select `house_id` from mf_house_collect where `open_id` = #{openId})
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

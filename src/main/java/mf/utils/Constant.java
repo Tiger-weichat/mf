@@ -9,8 +9,6 @@ package mf.utils;
  */
 public class Constant {
 
-    public static final String WEBCATNAME = "米兔科技-服务充值";
-
 	/**
 	 * 菜单类型
 	 * 

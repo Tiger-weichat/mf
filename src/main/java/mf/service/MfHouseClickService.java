@@ -29,5 +29,5 @@ public interface MfHouseClickService {
 	
 	void deleteBatch(Integer[] ids);
 
-	MfHouseClickEntity queryObjectByOpenId(String id, String houseId);
+	MfHouseClickEntity queryObjectByOpenId(String id);
 }

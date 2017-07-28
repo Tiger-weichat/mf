@@ -27,8 +27,4 @@ public interface MfRechargeOrderService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
-
-	void addOrder(String openId, String title, String oper, String dec, Integer orderType, Integer houseId);
-
-	MfRechargeOrderEntity queryObjectByOrderNo(Object id);
 }

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import mf.entity.*;
 import mf.service.*;
 import mf.utils.DateUtils;
-import mf.utils.PropertyUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,15 +47,13 @@ public class WebCatController extends AbstractController {
     private MfRechargeOrderService mfRechargeOrderService;
     @Autowired
     private MfPushLogService mfPushLogService;
-    @Autowired
-    private MfComplaintsService mfComplaintsService;
 
     /**
      * 房源广场
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/houselist", produces = "application/json" )
+    @RequestMapping(value = "/houselist", produces = "application/json")
     public Object houselist(){
         try{
 
@@ -81,170 +78,9 @@ public class WebCatController extends AbstractController {
             map.put("limit", limit);
             map.put("openId", getOpenId());
 
-            if(StringUtils.isNotBlank(infoType) && !infoType.equals("0")){
+            if(StringUtils.isNotBlank(infoType)){
                 map.put("infoType", infoType);
             }
-
-            MfPushEntity push = mfPushService.queryObject(getOpenId());
-
-            //出售
-            if(push.getIsSell() == 1){
-
-                map.put("isSell", 1);
-
-                //面积
-                List<Object> area = new ArrayList<Object>();
-                for(String a : push.getSellArea().split(",")){
-                    if("1".equals(a)){
-                        for(int i = 1; i <= 6; i ++){
-                            area.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        area.add(Integer.valueOf(a));
-                    }
-                }
-                map.put("sellArea", area.toArray());
-
-                //价格
-                List<Object> price = new ArrayList<Object>();
-                for(String p : push.getSellPrice().split(",")){
-                    if("1".equals(p)){
-                        for(int i = 1; i <= 7; i ++){
-                            price.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        price.add(Integer.valueOf(p));
-                    }
-                }
-                map.put("sellPrice", price.toArray());
-            }
-            //求购
-            if(push.getIsBuy() == 1){
-
-                map.put("isBuy", 1);
-
-                //面积
-                List<Object> area = new ArrayList<Object>();
-                for(String a : push.getBuyArea().split(",")){
-                    if("1".equals(a)){
-                        for(int i = 1; i <= 6; i ++){
-                            area.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        area.add(Integer.valueOf(a));
-                    }
-                }
-                map.put("buyArea", area.toArray());
-
-                //价格
-                List<Object> price = new ArrayList<Object>();
-                for(String p : push.getBuyPrice().split(",")){
-                    if("1".equals(p)){
-                        for(int i = 1; i <= 7; i ++){
-                            price.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        price.add(Integer.valueOf(p));
-                    }
-                }
-                map.put("buyPrice", price.toArray());
-            }
-            //出租
-            if(push.getIsRent() == 1){
-
-                map.put("isRent", 1);
-
-                //类型
-                List<Object> type = new ArrayList<Object>();
-                for(String t : push.getRentType().split(",")){
-                    if("1".equals(t)){
-                        for(int i = 2; i <= 3; i ++){
-                            type.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        type.add(Integer.valueOf(t));
-                    }
-                }
-                map.put("rentType", type.toArray());
-
-                //面积
-                List<Object> area = new ArrayList<Object>();
-                for(String a : push.getRentArea().split(",")){
-                    if("1".equals(a)){
-                        for(int i = 1; i <= 6; i ++){
-                            area.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        area.add(Integer.valueOf(a));
-                    }
-                }
-                map.put("rentArea", area.toArray());
-
-                //价格
-                List<Object> price = new ArrayList<Object>();
-                for(String p : push.getRentPrice().split(",")){
-                    if("1".equals(p)){
-                        for(int i = 1; i <= 7; i ++){
-                            price.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        price.add(Integer.valueOf(p));
-                    }
-                }
-                map.put("rentPrice", price.toArray());
-
-            }
-            //求租
-            if(push.getIsQz() == 1){
-
-                map.put("isQz", 1);
-
-                //面积
-                List<Object> area = new ArrayList<Object>();
-                for(String a : push.getQzArea().split(",")){
-                    if("1".equals(a)){
-                        for(int i = 1; i <= 6; i ++){
-                            area.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        area.add(Integer.valueOf(a));
-                    }
-                }
-                map.put("qzArea", area.toArray());
-
-                //价格
-                List<Object> price = new ArrayList<Object>();
-                for(String p : push.getQzPrice().split(",")){
-                    if("1".equals(p)){
-                        for(int i = 1; i <= 7; i ++){
-                            price.add(i);
-                        }
-                        break;
-                    }
-                    else{
-                        price.add(Integer.valueOf(p));
-                    }
-                }
-                map.put("qzPrice", price.toArray());
-            }
-            map.put("houseType", push.getHouseType().split(","));
-            map.put("pushArea", push.getPushArea().replaceAll("\"", "").split(","));
 
             List<MfHouseInfoEntity> list = mfPushLogService.queryMyHouse(map);
 
@@ -276,9 +112,9 @@ public class WebCatController extends AbstractController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("houseId", houseId);
         map.put("openId", getOpenId());
-        int c = mfHouseClickService.queryTotal(map);
+        List<MfHouseClickEntity> temp = mfHouseClickService.queryList(map);
 
-        if(c == 0){
+        if(temp == null || temp.size() == 0){
             //插入查看记录
             MfHouseClickEntity click = new MfHouseClickEntity();
             click.setOpenId(getOpenId());
@@ -290,19 +126,6 @@ public class WebCatController extends AbstractController {
 
         //获取房源详情
         MfHouseInfoEntity entity = mfHouseInfoService.queryObject(Long.valueOf(houseId));
-
-        //获取房源是否已经收藏
-        map.clear();
-        map.put("houseId", houseId);
-        map.put("openId", getOpenId());
-        int count = mfHouseCollectService.queryTotal(map);
-
-        if(count > 0){
-            entity.setIscollected(1);
-        }
-        else{
-            entity.setIscollected(0);
-        }
 
         return HouseUtils.getHouse(entity);
     }
@@ -327,36 +150,14 @@ public class WebCatController extends AbstractController {
         map.put("houseId", houseId);
         map.put("openId", getOpenId());
 
-        int myrank = 0;
-
         List<MfHouseClickEntity> list = mfHouseClickService.queryList(map);
 
-        int i = 1;
-        for(MfHouseClickEntity e : list){
+        //获取自己的排行
+        MfHouseClickEntity entity = mfHouseClickService.queryObjectByOpenId(getOpenId());
 
-            e.setRank(i);
+        list.add(0, entity);
 
-            if(StringUtils.isNotBlank(getOpenId()) && getOpenId().equals(e.getOpenId())){
-                myrank = i;
-            }
-
-            i ++;
-        }
-
-        Integer isshared = 0;
-
-        if(StringUtils.isNotBlank(getOpenId())){
-            //获取自己的排行
-            MfHouseClickEntity entity = mfHouseClickService.queryObjectByOpenId(getOpenId(), houseId);
-
-            if(entity != null){
-                entity.setRank(myrank);
-
-                list.add(0, entity);
-            }
-            isshared = 1;
-        }
-        return HouseClickUtil.getHouseClicks(list, isshared);
+        return HouseClickUtil.getHouseClicks(list);
     }
 
     /**
@@ -413,7 +214,7 @@ public class WebCatController extends AbstractController {
         }
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("houseId", Integer.valueOf(houseId));
+        map.put("house_id", Integer.valueOf(houseId));
         map.put("openId", getOpenId());
 
         int count = mfHouseCollectService.queryTotal(map);
@@ -484,9 +285,7 @@ public class WebCatController extends AbstractController {
 
         List<MfHouseInfoEntity> list = mfHouseCollectService.queryMyCollect(map);
 
-        int count = mfHouseCollectService.queryTotal(map);
-
-        return HouseUtils.getCollect(list, count);
+        return HouseUtils.getCollect(list);
     }
 
     /**
@@ -498,7 +297,7 @@ public class WebCatController extends AbstractController {
     public Object userinfo(){
 
         String openId = getOpenId();
-        logger.info("open_id"+openId);
+
         if(StringUtils.isBlank(openId)){
             return sendFailure("没有获取到用户信息.");
         }
@@ -519,51 +318,12 @@ public class WebCatController extends AbstractController {
         ParamData pd = this.getParamData();
 
         String id = pd.getString("id");
-        String type = pd.getString("type");
 
         if(StringUtils.isBlank(id)){
             return sendFailure("房源ID错误.");
         }
 
-        if(StringUtils.isBlank(type)){
-            return sendFailure("举报类型错误.");
-        }
-
-        String openId = getOpenId();
-
-        if(StringUtils.isBlank(openId)){
-            return sendFailure("没有获取到用户信息.");
-        }
-
-        //查询用户是否举报过
-        Map<String, Object> param = new HashMap<>();
-        param.put("openId", openId);
-        param.put("houseId", id);
-
-        int cc = mfComplaintsService.queryHouseTotal(param);
-
-        if(cc >= 1){
-            return sendFailure("房源信息不能重复举报.");
-        }
-
-        MfUserEntity user = mfUserService.queryObject(openId);
-
-//        mfHouseInfoService.housereport(Long.valueOf(id));
-
-        MfComplaintsEntity c = new MfComplaintsEntity();
-        MfHouseInfoEntity h = mfHouseInfoService.queryObject(Long.valueOf(id));
-
-        c.setOpenId(user.getOpenId());
-        c.setNickname(user.getNickname());
-        c.setHouseId(h.getId().intValue());
-        c.setHouseTitle(h.getTitle());
-        c.setHouseUrl(h.getUrl());
-        c.setStatus(0);
-        c.setCreateTime(DateUtils.getTodayDate());
-        c.setUpdateTime(DateUtils.getTodayDate());
-        c.setComType(type);
-
-        mfComplaintsService.save(c);
+        mfHouseInfoService.housereport(Long.valueOf(id));
 
         return sendSuccess();
     }
@@ -587,8 +347,8 @@ public class WebCatController extends AbstractController {
         //获取两个包月信息
         Map<String, Object> map = new HashMap<String, Object>();
 
-//        map.put("offset", 0);
-//        map.put("limit", 2);
+        map.put("offset", 0);
+        map.put("limit", 2);
         map.put("type", 1);
 
         List<MfRechargeEntity> list = mfRechargeService.queryList(map);
@@ -597,8 +357,8 @@ public class WebCatController extends AbstractController {
         //获取4个蜗牛币信息
 
         map.clear();
-//        map.put("offset", 0);
-//        map.put("limit", 4);
+        map.put("offset", 0);
+        map.put("limit", 4);
         map.put("type", 2);
 
         list = mfRechargeService.queryList(map);
@@ -638,10 +398,9 @@ public class WebCatController extends AbstractController {
         ParamData pd = this.getParamData();
 
         Map<String, Object> map = new HashMap<>();
-        //获取前台传的appid,转换成对应省ID
-        logger.info("appid:"+pd.getString("appid"));
+
         map.put("degree", 2);
-        map.put("parentCode", "1000010");
+        map.put("parent_code", pd.getString("parent_code"));
 
         List<MfAreaEntity> list = mfAreaService.queryList(map);
 
@@ -658,14 +417,9 @@ public class WebCatController extends AbstractController {
         ParamData pd = this.getParamData();
 
         Map<String, Object> map = new HashMap<>();
-        //获取前台传的parent_code,如果为空,则传默认的
-        String city_id = pd.getString("parent_code");
-        logger.info("city_id:"+city_id);
-        if(city_id == null || city_id.isEmpty()){
-        	city_id = "2000201";
-        }
+
         map.put("degree", 3);
-        map.put("parentCode", city_id);
+        map.put("parent_code", pd.getString("parent_code"));
 
         List<MfAreaEntity> list = mfAreaService.queryList(map);
 
@@ -684,7 +438,7 @@ public class WebCatController extends AbstractController {
         Map<String, Object> map = new HashMap<>();
 
         map.put("degree", 4);
-        map.put("parentCode", pd.getString("parent_code"));
+        map.put("parent_code", pd.getString("parent_code"));
 
         List<MfAreaEntity> list = mfAreaService.queryList(map);
 
@@ -700,7 +454,7 @@ public class WebCatController extends AbstractController {
     @RequestMapping(value = "/getpush", produces = "application/json")
     public Object getpush(){
 
-        MfPushEntity entity = mfPushService.queryObject(getOpenId());//oBrPNwGoLGX6w0d2Rh0dsh3i4Uks
+        MfPushEntity entity = mfPushService.queryObject(getOpenId());
 
         return PushUtil.getPush(entity);
     }
@@ -777,23 +531,7 @@ public class WebCatController extends AbstractController {
             entity.setPushArea(pd.getString("push_area"));
         }
 
-        entity.setOpenId(getOpenId());
-        entity.setSystem(Long.valueOf(PropertyUtil.getProperty("system")));
-
-        //删除之前推送设置
-        mfPushService.delete(getOpenId());
-
         mfPushService.save(entity);
-
-        //删除之前的推送消息
-        mfPushLogService.deleteByOpenId(getOpenId());
-
-        //删除推送推列
-        MessageConstants.OUT_PUSH.put(entity.getOpenId(), DateUtils.getTodayDate());
-        //勿扰消息归零
-        MessageConstants.WR_HOUSE_MESSAGE.remove(entity.getOpenId());
-        //夜间消息归零
-        MessageConstants.NIGHT_HOUSE_MESSAGE.remove(entity.getOpenId());
 
         return sendSuccess();
     }
@@ -806,17 +544,7 @@ public class WebCatController extends AbstractController {
     @RequestMapping(value = "/getAd", produces = "application/json")
     public Object getAd(){
 
-        ParamData pd = this.getParamData();
-
-        String type = pd.getString("type");
-
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        if(StringUtils.isNotBlank(type)){
-            map.put("type", type);
-        }
-
-        List<MfAdEntity> list = mfAdService.queryList(map);
+        List<MfAdEntity> list = mfAdService.queryList(new HashMap<String, Object>());
 
         //取一条广告
         MfAdEntity entity = new MfAdEntity();
@@ -828,7 +556,7 @@ public class WebCatController extends AbstractController {
         JSONObject ad = AdUtil.getAd(entity, user);
 
         //更新用户广告显示时间
-        if(ad.getIntValue("show") == 1 && user != null){
+        if(ad.getIntValue("show") == 1){
             user.setAdShow(DateUtils.getTodayDate());
             mfUserService.update(user);
         }

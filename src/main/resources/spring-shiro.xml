@@ -53,9 +53,6 @@
 				/author/**=anon
 				/index/**=anon
 				/dist/**=anon
-				/opload/**=anon
-				/lottery/**=anon
-				/*.txt=anon
 	        	/**=authc
 	        </value>
 	    </property>

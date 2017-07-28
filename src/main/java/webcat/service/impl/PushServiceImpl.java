@@ -18,8 +18,6 @@ import webcat.cache.PushCache;
 import webcat.service.PushService;
 import webcat.utils.MessageConstants;
 
-import java.net.URLDecoder;
-
 /**
  * Created by dengfan on 2017/3/7.
  */
@@ -89,7 +87,7 @@ public class PushServiceImpl implements PushService {
         MfUserEntity user = mfUserService.queryObject(openId);
 
         //包月会员，不做任何记录
-        if(DateUtils.daysBetween(DateUtils.getTodayDate(), user.getExpireDate()) > 0){
+        if(DateUtils.daysBetween(DateUtils.getTodayDate(), user.getExpireDate())< 0){
 
         }
         else{
@@ -97,22 +95,22 @@ public class PushServiceImpl implements PushService {
             Message m = new Message();
 
             //更新蜗牛币
-//            user.setWnb(user.getWnb() - 1);
-//            mfUserService.update(user);
+            user.setWnb(user.getWnb() - 1);
+            mfUserService.update(user);
 
             //50个的时候推送蜗牛币不足提醒
             if(user.getWnb() == 50){
                 m.sendWnb50(user.getOpenId());
             }
 
-            if(user.getWnb() == 0){
+            if(user.getWnb() <= 0){
                 //关掉推送
-//                mfPushService.delete(openId);
+                mfPushService.delete(openId);
                 //暂时不刷新缓存
 
                 //推送蜗牛币为0的消息
                 try {
-                    t.sendYebzWnb(URLDecoder.decode(user.getNickname(), "UTF-8"), user.getOpenId());
+                    t.sendYebzWnb(new String(Base64Utils.decode(user.getNickname())), user.getOpenId());
                 } catch (Exception e) {
                     logger.info("昵称解码失败.", e);
                 }

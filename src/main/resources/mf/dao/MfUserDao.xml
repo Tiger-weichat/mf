@@ -9,32 +9,18 @@
 
 	<select id="queryList" resultType="mf.entity.MfUserEntity">
 		select * from mf_user
-		where `system` = #{system}
+		where 1 = 1
 		<if test="status != null">
 			and `status` = #{status}
 		</if>
 		<if test="hous48 != null">
-			and (NOW()-INTERVAL 40 HOUR) >= `last_time`
+			and `last_time` >= (NOW()-INTERVAL 40 HOUR)
 			and (NOW()-INTERVAL 41 HOUR) >= `last_time`
 		</if>
 		<if test="vip != null">
-			and  (NOW()-INTERVAL 72 HOUR) >= `expire_date`
-			and  (NOW()-INTERVAL 96 HOUR) >= `expire_date`
+			and `expire_date` >= (NOW()-INTERVAL 72 HOUR)
+			and (NOW()-INTERVAL 96 HOUR) >= `expire_date`
 		</if>
-		<if test="wnb != null">
-			  and `wnb` = 0 and `wnb_end_time` is null
-		</if>
-		<if test="nickname != null">
-			and `nickname` like CONCAT('%',#{nickname},'%')
-		</if>
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
-			<otherwise>
-				order by id desc
-			</otherwise>
-		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -42,7 +28,7 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from mf_user
-		where `system` = 1
+		where 1 = 1
 		<if test="status != null">
 			and `status` = #{status}
 		</if>
@@ -62,11 +48,9 @@
 			`province`, 
 			`remark`,
 			`wnb`,
-			`ad_show`,
 			`last_time`,
+			`ad_show`,
 			`status`,
-			`system`,
-			`wnb_end_time`,
 			`create_time`, 
 			`update_time`, 
 			`attr1`, 
@@ -87,11 +71,9 @@
 			#{province}, 
 			#{remark},
 			#{wnb},
-			#{adShow},
 			#{lastTime},
+			#{adShow}
 			#{status},
-			#{system},
-			#{wnbEndTime},
 			#{createTime}, 
 			#{updateTime}, 
 			#{attr1}, 
@@ -114,13 +96,12 @@
 			<if test="province != null">`province` = #{province}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="wnb != null">`wnb` = #{wnb}, </if>
+			<if test="lastTime != null">`last_time` = #{lastTime}, </if>
 			<if test="adShow != null">`ad_show` = #{adShow}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="wrStatus != null">`wr_status` = #{wrStatus}, </if>
-			<if test="lastTime != null">`last_time` = #{lastTime}, </if>
-			`wnb_end_time` = #{wnbEndTime},
 			<if test="status != null">`status` = #{status}, </if>
-			`attr1` = #{attr1},
+			<if test="attr1 != null">`attr1` = #{attr1}, </if>
 			<if test="attr2 != null">`attr2` = #{attr2}, </if>
 			<if test="attr3 != null">`attr3` = #{attr3}, </if>
 			<if test="attr4 != null">`attr4` = #{attr4}</if>
@@ -131,10 +112,9 @@
 	<update id="subscribe">
 		update mf_user
 		<set>
-			`status` = 1,
-			`last_time` = NOW()
+			`status` = 1
 		</set>
-		where open_id = #{value}
+		open_id = #{value}
 	</update>
 
 	<update id="unsubscribe">
@@ -142,7 +122,7 @@
 		<set>
 			`status` = 0
 		</set>
-		where open_id = #{value}
+		open_id = #{value}
 	</update>
 	
 	<delete id="delete">

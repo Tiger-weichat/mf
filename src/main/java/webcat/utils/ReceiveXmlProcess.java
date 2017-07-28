@@ -7,18 +7,12 @@ import java.util.Iterator;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 解析接收到的微信xml，返回消息对象
  * @author pamchen-1
  *
  */
 public class ReceiveXmlProcess {
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	/**
 	 * 解析微信xml消息
 	 * @param strXml
@@ -54,7 +48,7 @@ public class ReceiveXmlProcess {
 				method.invoke(msg, ele.getText());
 			}
 		} catch (Exception e) {
-			logger.info("xml 格式异常: "+ strXml);
+			System.out.println("xml 格式异常: "+ strXml);
 			e.printStackTrace();
 		}
 		return msg;

@@ -6,7 +6,6 @@ import mf.entity.MfRechargeOrderEntity;
 import mf.utils.DateUtils;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class OrderUtil {
 
         json.put("time", DateUtils.format(entity.getCreateTime(), DateUtils.TIME_PATTERN));
         json.put("title", entity.getTitle());
-        json.put("oper_type", entity.getOperType());
+        json.put("oper_Type", entity.getOperType());
         json.put("dec", entity.getDes());
 
         return json;
@@ -34,7 +33,7 @@ public class OrderUtil {
 
         json.put("wnb", wnb);
 
-        Map<String, JSONArray> map = new LinkedHashMap<String, JSONArray>();
+        Map<String, JSONArray> map = new HashMap<String, JSONArray>();
 
         for(MfRechargeOrderEntity entity : list){
 

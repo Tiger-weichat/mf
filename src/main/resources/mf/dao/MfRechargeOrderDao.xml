@@ -7,46 +7,19 @@
 		select * from mf_recharge_order where id = #{value}
 	</select>
 
-	<select id="queryObjectByOrderNo" resultType="mf.entity.MfRechargeOrderEntity">
-		select * from mf_recharge_order where `order_no` = #{value}
-	</select>
-
 	<select id="queryList" resultType="mf.entity.MfRechargeOrderEntity">
 		select * from mf_recharge_order
 		where `status` = 1
-		<if test="openId != null">
-			and open_id = #{openId}
-		</if>
-		<if test="nickname != null">
-			and nickname like CONCAT('%',#{nickname},'%')
-		</if>
-		<if test="orderType != null and orderType != 0">
-			and order_type = #{orderType}
-		</if>
-		<if test="houseId != null and houseId != 0">
-			and house_id = #{houseId}
-		</if>
-		order by create_time desc
+		and `open_id` = #{openId}
+		order by `create_time` desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(1) from mf_recharge_order
-		WHERE status = 1
-		<if test="openId != null">
-			and open_id = #{openId}
-		</if>
-		<if test="nickname != null">
-			and nickname like CONCAT('%',#{nickname},'%')
-		</if>
-		<if test="houseId != null and houseId != 0">
-			and house_id = #{houseId}
-		</if>
-		<if test="cz != null">
-			and order_no is not NULL
-		</if>
+		select count(*) from mf_recharge_order
+		where `open_id` = #{openid}
 	</select>
 	 
 	<insert id="save" parameterType="mf.entity.MfRechargeOrderEntity" useGeneratedKeys="true" keyProperty="id">
@@ -59,10 +32,7 @@
 			`create_time`,
 			`open_id`,
 			`title`,
-			`oper_type`,
-			`order_type`,
-			`nickname`,
-			`house_id`
+			`oper_type`
 		)
 		values
 		(
@@ -71,12 +41,9 @@
 			#{des}, 
 			#{status}, 
 			#{createTime},
-			#{openId},
+			#{openid},
 			#{title},
-			#{operType},
-			#{orderType},
-			#{nickname},
-			#{houseId}
+			#{operType}
 		)
 	</insert>
 	 
@@ -87,7 +54,7 @@
 			<if test="rechargeId != null">`recharge_id` = #{rechargeId}, </if>
 			<if test="des != null">`des` = #{des}, </if>
 			<if test="status != null">`status` = #{status}, </if>
-			<if test="openId != null">`open_id` = #{openId},</if>
+			<if test="openid != null">`open_id` = #{openid},</if>
 			<if test="title != null">`title` = #{title},</if>
 			<if test="operType != null">`oper_type` = #{operType},</if>
 			<if test="createTime != null">`create_time` = #{createTime}</if>

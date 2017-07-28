@@ -38,11 +38,5 @@ public interface MfHouseInfoService {
 	 * 获取最新的一条房源记录
 	 * @return
 	 */
-	List<MfHouseInfoEntity> getNewHouse(Long areaCode);
-
-	/**
-	 * 修改房源信息-房源广场
-	 * @param house
-	 */
-	void updateHouseInfo(MfHouseInfoEntity house);
+	MfHouseInfoEntity getNewHouse();
 }

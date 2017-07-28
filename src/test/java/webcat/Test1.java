@@ -13,16 +13,15 @@ import java.net.URLEncoder;
  */
 public class Test1 {
     public static void main(String[] args) {
-       String url = "http://www.bmbang.cc/author/author?redirect_url=fyxq&id=";
+       String url = "微微";
 
         try {
-//            System.out.println(URLEncoder.encode("蜗牛MM", "UTF-8"));
+//            System.out.println(URLEncoder.encode(url, "UTF-8"));
 
 //            String eds = URLEncoder.encode(url, "UTF-8");
 //            System.out.println(eds);
 
-            System.out.println(URLDecoder.decode("A+%E5%88%9A%E5%AD%90%C2%B2%E2%81%B0%C2%B97", "UTF-8"));
-
+            System.out.println(URLDecoder.decode("%E9%9D%9E", "UTF-8"));
 
         } catch (Exception e) {
             e.printStackTrace();

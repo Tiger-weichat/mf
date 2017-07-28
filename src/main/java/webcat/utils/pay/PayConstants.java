@@ -1,15 +1,13 @@
 package webcat.utils.pay;
 
-import mf.utils.PropertyUtil;
-
 public class PayConstants {
 
-	public final static String MCH_ID = PropertyUtil.getProperty("MCH_ID");// 商户号
-	public final static String API_KEY = PropertyUtil.getProperty("API_KEY");// API密钥
+	public final static String MCH_ID = "1423199802";// 商户号
+	public final static String API_KEY = "ffffffffffffffffffffffff12345678";// API密钥
 	public final static String SIGN_TYPE = "MD5";// 签名加密方式
 //	public final static String CERT_PATH = "";// 微信支付证书存放路径地址
 	// 微信支付统一接口的回调action
-	public final static String NOTIFY_URL = "pay/callback";
+	public final static String NOTIFY_URL = "paycontroller/callback";
 	// 微信支付成功支付后跳转的地址
 	public final static String SUCCESS_URL = "#warn_success";
 	// oauth2授权时回调action

@@ -28,21 +28,8 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
-	<filter>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-		<init-param>
-			<param-name>logLevel</param-name>
-			<param-value>WARN</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-
+	
+	
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -54,6 +41,18 @@
 	
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>jsessionid</filter-name>
+		<filter-class>
+			mf.filter.DisableUrlSessionFilter
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>jsessionid</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
