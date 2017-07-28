@@ -1,5 +1,9 @@
 package webcat.task;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 import mf.entity.MfHouseInfoEntity;
 import mf.entity.MfPushEntity;
 import mf.entity.MfUserEntity;
@@ -19,11 +23,6 @@ import webcat.cache.PushCache;
 import webcat.service.PushService;
 import webcat.utils.MessageConstants;
 import webcat.utils.PushSetUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * 初始化各种推送消息
